@@ -20,10 +20,10 @@ int validateRollNumber(char input[])
     for (int i = 0; input[i] != '\0'; i++)     //starts from 0 move until last digit is 0 
     {
         if (!isdigit((unsigned char)input[i]))            //isdigit belongs to <ctype.h> library
-            return 0;
+            return 0;    //normal char can be -ve nd passing a -ve value can cause undefined behav
     }
 
-    if (atoi(input) <= 0)                    //atoi-converts string to integer
+    if (atoi(input) <= 0)           //atoi-converts string to integer like "123"->123
         return 0;                    //input cant be negative
 
     return 1;       //exits from the code
@@ -83,13 +83,13 @@ int validateEmail(char email[])
     if (atCount != 1)              //should contain only 1 @ 
         return 0;
 
-    if (atPosition == 0)           //@ should not be at 1st position
+    if (atPosition == 0)           //@ should not be at 1st position i.e. 0th index
         return 0;
 
     if (email[atPosition + 1] == '\0')           //after @ gmail.com should be there
         return 0;
 
-    if (dotPosition <= atPosition + 1)          // . must be after @
+    if (dotPosition <= atPosition + 1)          // . must be after @gmail not straight after @
         return 0;
 
     if (email[dotPosition + 1] == '\0')        //after . com should be there
