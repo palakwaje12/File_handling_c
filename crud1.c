@@ -9,26 +9,27 @@ struct Student
     char name[50];
     char email[50];
 };
-
-//to validate rollno,name and email
-
+//validate roll no
 int validateRollNumber(char input[])
 {
-    if (strlen(input) == 0)    //if input length=0 return invalid number 
+    int rollNo;
+
+    if (strlen(input) == 0)      //no input is given return 0
+        return 0;
+    for (int i = 0; input[i] != '\0'; i++)
+    {
+        if (!isdigit((unsigned char)input[i]))
+            return 0;
+    }    
+    rollNo = atoi(input);   //atoi converts string to integer i.e. ASCII to integer becoz fgets stores input as string nd rollno is int
+    if (rollNo == 0)
+        return 0;
+    if (rollNo >= 100 && rollNo <= 999)
         return 0;
 
-    for (int i = 0; input[i] != '\0'; i++)     //starts from 0 move until last digit is 0 
-    {
-        if (!isdigit((unsigned char)input[i]))            //isdigit belongs to <ctype.h> library
-            return 0;    //normal char can be -ve nd passing a -ve value can cause undefined behav
-    }
-
-    if (atoi(input) <= 0)           //atoi-converts string to integer like "123"->123
-        return 0;                    //input cant be negative
-
-    return 1;       //exits from the code
+    return 1;
 }
-
+//validate name
 int validateName(char name[])
 {
     int hasLetter = 0;
@@ -38,7 +39,7 @@ int validateName(char name[])
 
     for (int i = 0; name[i] != '\0'; i++)
     {
-        if (isalpha((unsigned char)name[i]))               //checks whether entered input is alphabet or not
+        if (isalpha((unsigned char)name[i]))
         {
             hasLetter = 1;
         }
@@ -47,13 +48,11 @@ int validateName(char name[])
             return 0;
         }
     }
-
     if (!hasLetter)
         return 0;
-
     return 1;
 }
-
+//email validation
 int validateEmail(char email[])
 {
     int atCount = 0;
@@ -65,7 +64,7 @@ int validateEmail(char email[])
 
     for (int i = 0; email[i] != '\0'; i++)
     {
-        if (isspace((unsigned char)email[i]))     //email should not contain any spaces
+        if (isspace((unsigned char)email[i]))
             return 0;
 
         if (email[i] == '@')
@@ -80,27 +79,27 @@ int validateEmail(char email[])
         }
     }
 
-    if (atCount != 1)              //should contain only 1 @ 
+    if (atCount != 1)
         return 0;
 
-    if (atPosition == 0)           //@ should not be at 1st position i.e. 0th index
+    if (atPosition == 0)
         return 0;
 
-    if (email[atPosition + 1] == '\0')           //after @ gmail.com should be there
+    if (email[atPosition + 1] == '\0')
         return 0;
 
-    if (dotPosition <= atPosition + 1)          // . must be after @gmail not straight after @
+    if (dotPosition <= atPosition + 1)
         return 0;
 
-    if (email[dotPosition + 1] == '\0')        //after . com should be there
+    if (email[dotPosition + 1] == '\0')
         return 0;
 
-    if (dotPosition == atPosition - 1)        // . must not be before @
+    if (dotPosition == atPosition - 1)
         return 0;
 
     return 1;
 }
-//input functions
+// GET ROLL NUMBER 
 int getRollNumber()
 {
     char buffer[100];
@@ -108,9 +107,10 @@ int getRollNumber()
     while (1)
     {
         printf("Enter Roll Number: ");
+
         fgets(buffer, sizeof(buffer), stdin);
 
-        buffer[strcspn(buffer, "\n")] = '\0';             //strcspn-Find length before specified characters
+        buffer[strcspn(buffer, "\n")] = '\0';
 
         if (validateRollNumber(buffer))
         {
@@ -121,12 +121,13 @@ int getRollNumber()
         printf("Please enter a positive number only.\n");
     }
 }
-
+//get name
 void getName(char name[])
 {
     while (1)
     {
         printf("Enter Name: ");
+
         fgets(name, 50, stdin);
 
         name[strcspn(name, "\n")] = '\0';
@@ -137,15 +138,16 @@ void getName(char name[])
         }
 
         printf("Invalid name!\n");
-        printf("Name should contain alphabets and spaces only.\n");
+        printf("Name should contain alphabets only.\n");
     }
 }
-
+//GET EMAIL
 void getEmail(char email[])
 {
     while (1)
     {
         printf("Enter Email: ");
+
         fgets(email, 50, stdin);
 
         email[strcspn(email, "\n")] = '\0';
@@ -159,9 +161,7 @@ void getEmail(char email[])
         printf("Example: student@gmail.com\n");
     }
 }
-
-// CHECKS FOR DUPLICATE ROLL NUMBER 
-
+//CHECK DUPLICATE ROLL NUMBER 
 int rollNumberExists(int roll)
 {
     FILE *fp;
@@ -172,7 +172,7 @@ int rollNumberExists(int roll)
     if (fp == NULL)
         return 0;
 
-    while (fscanf(fp, "%d|%49[^|]|%49[^\n]\n",
+    while (fscanf(fp, "%d|%49[^|]|%49[^\n]",
                   &s.rollNo,
                   s.name,
                   s.email) == 3)
@@ -185,18 +185,19 @@ int rollNumberExists(int roll)
     }
 
     fclose(fp);
+
     return 0;
 }
-
-
-
 int main()
 {
     FILE *fp;
+
     int choice;
     int roll;
     int found;
+
     struct Student s;
+
     char buffer[100];
 
     do
@@ -204,11 +205,13 @@ int main()
         printf("\n========================================\n");
         printf("        STUDENT FILE CRUD SYSTEM\n");
         printf("========================================\n");
+
         printf("1. Create / Add Student\n");
         printf("2. Read / Display Students\n");
         printf("3. Update Student\n");
         printf("4. Delete Student\n");
         printf("5. Exit\n");
+
         printf("========================================\n");
 
         while (1)
@@ -216,6 +219,7 @@ int main()
             printf("Enter your choice: ");
 
             fgets(buffer, sizeof(buffer), stdin);
+
             buffer[strcspn(buffer, "\n")] = '\0';
 
             if (strlen(buffer) == 1 &&
@@ -229,250 +233,270 @@ int main()
             printf("Invalid choice!\n");
             printf("Please enter a number between 1 and 5.\n");
         }
-
-        //create/add
-
-        if (choice == 1)
+        switch (choice)
         {
-            fp = fopen("ass1.txt", "a");
 
-            if (fp == NULL)
-            {
-                printf("\nError opening file!\n");
-                continue;
-            }
+            case 1:
 
-            printf("\n========== ADD STUDENT ==========\n");
+                fp = fopen("ass1.txt", "a");
 
-            //Roll Number
-
-            while (1)
-            {
-                s.rollNo = getRollNumber();
-
-                if (rollNumberExists(s.rollNo))
+                if (fp == NULL)
                 {
-                    printf("Roll number already exists!\n");
-                    printf("Please enter a different roll number.\n");
-                }
-                else
-                {
+                    printf("Error opening file!\n");
                     break;
                 }
-            }
 
-            // Name 
+                printf("\n========== ADD STUDENT ==========\n");
 
-            getName(s.name);
-
-            // Email 
-
-            getEmail(s.email);
-
-            // Save 
-
-            fprintf(fp, "%d|%s|%s\n",
-                    s.rollNo,
-                    s.name,
-                    s.email);
-
-            fclose(fp);
-
-            printf("\nStudent added successfully!\n");
-        }
-
-        /* ---------- READ / DISPLAY ---------- */
-
-        else if (choice == 2)
-        {
-            fp = fopen("ass1.txt", "r");
-
-            if (fp == NULL)
-            {
-                printf("\nNo student records found!\n");
-                continue;
-            }
-
-            printf("\n========== STUDENT RECORDS ==========\n");
-
-            int count = 0;
-
-            while (fscanf(fp, "%d|%49[^|]|%49[^\n]\n",
-                        &s.rollNo,
-                        s.name,
-                        s.email) == 3)
-            {
-                count++;
-
-                printf("\nRoll Number : %d", s.rollNo);
-                printf("\nName        : %s", s.name);
-                printf("\nEmail       : %s", s.email);
-                printf("\n-------------------------------------\n");
-            }
-
-            if (count == 0)
-            {
-                printf("No student records found!\n");
-            }
-
-            fclose(fp);
-        }
-
-        /* ---------- UPDATE ---------- */
-
-        else if (choice == 3)
-        {
-            FILE *temp;
-            found = 0;
-
-            printf("\n========== UPDATE STUDENT ==========\n");
-
-            roll = getRollNumber();
-
-            fp = fopen("ass1.txt", "r");
-
-            if (fp == NULL)
-            {
-                printf("\nNo student records found!\n");
-                continue;
-            }
-
-            temp = fopen("temp.txt", "w");
-
-            if (temp == NULL)
-            {
-                printf("\nError creating temporary file!\n");
-                fclose(fp);
-                continue;
-            }
-
-            while (fscanf(fp, "%d|%49[^|]|%49[^\n]\n",
-                          &s.rollNo,
-                          s.name,
-                          s.email) == 3)
-            {
-                if (s.rollNo == roll)
+                while (1)
                 {
-                    found = 1;
+                    s.rollNo = getRollNumber();
 
-                    printf("\nStudent found!\n");
-
-                    printf("Current Name  : %s\n", s.name);
-                    printf("Current Email : %s\n", s.email);
-
-                    printf("\nEnter new details:\n");
-
-                    getName(s.name);
-                    getEmail(s.email);
+                    if (rollNumberExists(s.rollNo))
+                    {
+                        printf("Roll number already exists!\n");
+                        printf("Please enter a different roll number.\n");
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
 
-                fprintf(temp, "%d|%s|%s\n",
+                getName(s.name);
+
+                getEmail(s.email);
+
+                //Save into file
+                fprintf(fp, "%d|%s|%s\n",
                         s.rollNo,
                         s.name,
                         s.email);
-            }
 
-            fclose(fp);
-            fclose(temp);
-
-            if (found)
-            {
-                remove("ass1.txt");
-
-                if (rename("temp.txt", "ass1.txt") != 0)
-                {
-                    printf("\nError updating file!\n");
-                }
-                else
-                {
-                    printf("\nStudent updated successfully!\n");
-                }
-            }
-            else
-            {
-                remove("temp.txt");
-                printf("\nStudent not found!\n");
-            }
-        }
-
-        /* ---------- DELETE ---------- */
-
-        else if (choice == 4)
-        {
-            FILE *temp;
-            found = 0;
-
-            printf("\n========== DELETE STUDENT ==========\n");
-
-            roll = getRollNumber();
-
-            fp = fopen("ass1.txt", "r");
-
-            if (fp == NULL)
-            {
-                printf("\nNo student records found!\n");
-                continue;
-            }
-
-            temp = fopen("temp.txt", "w");
-
-            if (temp == NULL)
-            {
-                printf("\nError creating temporary file!\n");
                 fclose(fp);
-                continue;
-            }
 
-            while (fscanf(fp, "%d|%49[^|]|%49[^\n]\n",
-                          &s.rollNo,
-                          s.name,
-                          s.email) == 3)
-            {
-                if (s.rollNo == roll)
+                printf("\nStudent added successfully!\n");
+
+                break;
+
+
+            // ================= READ =================
+
+            case 2:
+
+                fp = fopen("ass1.txt", "r");
+
+                if (fp == NULL)
                 {
-                    found = 1;
-
-                    /* Do not write this student */
-                    continue;
+                    printf("\nNo student records found!\n");
+                    break;
                 }
 
-                fprintf(temp, "%d|%s|%s\n",
-                        s.rollNo,
-                        s.name,
-                        s.email);
-            }
+                printf("\n========== STUDENT RECORDS ==========\n");
 
-            fclose(fp);
-            fclose(temp);
+                int count = 0;
 
-            if (found)
-            {
-                remove("ass1.txt");
-
-                if (rename("temp.txt", "ass1.txt") != 0)
+                while (fscanf(fp, "%d|%49[^|]|%49[^\n]",    //\n removed
+                              &s.rollNo,
+                              s.name,
+                              s.email) == 3)
                 {
-                    printf("\nError deleting student!\n");
+                    count++;
+
+                    printf("\nRoll Number : %d", s.rollNo);
+                    printf("\nName        : %s", s.name);
+                    printf("\nEmail       : %s", s.email);
+
+                    printf("\n-------------------------------------\n");
+                }
+
+                if (count == 0)
+                {
+                    printf("No student records found!\n");
+                }
+
+                fclose(fp);
+
+                break;
+
+
+            // ================= UPDATE =================
+
+            case 3:
+            {
+                FILE *temp;
+
+                found = 0;
+
+                printf("\n========== UPDATE STUDENT ==========\n");
+
+                roll = getRollNumber();
+
+
+                fp = fopen("ass1.txt", "r");
+
+                if (fp == NULL)
+                {
+                    printf("\nNo student records found!\n");
+                    break;
+                }
+
+
+                temp = fopen("temp.txt", "w");
+
+                if (temp == NULL)
+                {
+                    printf("\nError creating temporary file!\n");
+
+                    fclose(fp);
+
+                    break;
+                }
+
+
+                while (fscanf(fp, "%d|%49[^|]|%49[^\n]",
+                              &s.rollNo,
+                              s.name,
+                              s.email) == 3)
+                {
+                    if (s.rollNo == roll)
+                    {
+                        found = 1;
+
+                        printf("\nStudent found!\n");
+
+                        printf("Current Name  : %s\n", s.name);
+                        printf("Current Email : %s\n", s.email);
+
+                        printf("\nEnter new details:\n");
+
+                        getName(s.name);
+                        getEmail(s.email);
+                    }
+
+
+                    fprintf(temp, "%d|%s|%s\n",
+                            s.rollNo,
+                            s.name,
+                            s.email);
+                }
+
+
+                fclose(fp);
+                fclose(temp);
+
+
+                if (found)
+                {
+                    remove("ass1.txt");
+
+                    if (rename("temp.txt", "ass1.txt") != 0)
+                    {
+                        printf("\nError updating file!\n");
+                    }
+                    else
+                    {
+                        printf("\nStudent updated successfully!\n");
+                    }
                 }
                 else
                 {
-                    printf("\nStudent deleted successfully!\n");
+                    remove("temp.txt");
+
+                    printf("\nStudent not found!\n");
                 }
+
+                break;
             }
-            else
+            //delete
+            case 4:
             {
-                remove("temp.txt");
-                printf("\nStudent not found!\n");
+                FILE *temp;
+
+                found = 0;
+
+                printf("\n========== DELETE STUDENT ==========\n");
+
+                roll = getRollNumber();
+                fp = fopen("ass1.txt", "r");
+                if (fp == NULL)
+                {
+                    printf("\nNo student records found!\n");
+                    break;
+                }
+                temp = fopen("temp.txt", "w");
+
+                if (temp == NULL)
+                {
+                    printf("\nError creating temporary file!\n");
+
+                    fclose(fp);
+
+                    break;
+                }
+
+                while (fscanf(fp, "%d|%49[^|]|%49[^\n]",
+                              &s.rollNo,
+                              s.name,
+                              s.email) == 3)
+                {
+                    if (s.rollNo == roll)
+                    {
+                        found = 1;
+
+                        // Do not copy this student
+                        continue;
+                    }
+
+                    fprintf(temp, "%d|%s|%s\n",
+                            s.rollNo,
+                            s.name,
+                            s.email);
+                }
+
+                fclose(fp);
+                fclose(temp);
+
+                if (found)
+                {
+                    remove("ass1.txt");
+
+                    if (rename("temp.txt", "ass1.txt") != 0)
+                    {
+                        printf("\nError deleting student!\n");
+                    }
+                    else
+                    {
+                        printf("\nStudent deleted successfully!\n");
+                    }
+                }
+                else
+                {
+                    remove("temp.txt");
+
+                    printf("\nStudent not found!\n");
+                }
+
+                break;
             }
-        }
 
-        /* ---------- EXIT ---------- */
 
-        else if (choice == 5)
-        {
-            printf("\nExiting program...\n");
+            // ================= EXIT =================
+
+            case 5:
+
+                printf("\nExiting program...\n");
+
+                break;
+
+
+            default:
+
+                printf("\nInvalid choice!\n");
         }
 
     } while (choice != 5);
+
 
     return 0;
 }
