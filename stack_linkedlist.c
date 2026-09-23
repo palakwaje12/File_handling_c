@@ -5,15 +5,15 @@
 
 struct Stack
 {
-    int data;
-    struct Stack *next;
+    int data;       //stores the actual value
+    struct Stack *next;      //stores address of next node
 };
 
-struct Stack *top = NULL;
+struct Stack *top = NULL;      //initially top is pointing to null which means stack is empty
 
 int isNumber(const char *str)
 {
-    if(*str == '\0')
+    if(*str == '\0')    //if =\0 means string is empty
         return 0;
 
     while(*str)
@@ -30,6 +30,7 @@ int isNumber(const char *str)
 void push();
 void pop();
 void peek();
+void update();
 void display();
 void freeStack();
 
@@ -44,8 +45,9 @@ int main()
         printf("1. Push\n");
         printf("2. Pop\n");
         printf("3. Peek\n");
-        printf("4. Display\n");
-        printf("5. Exit\n");
+        printf("4. Update\n");
+        printf("5. Display\n");
+        printf("6. Exit\n");
 
         printf("Enter Choice : ");
 
@@ -80,10 +82,14 @@ int main()
                 break;
 
             case 4:
-                display();
+                update();
                 break;
 
             case 5:
+                display();
+                break;
+
+            case 6:
                 freeStack();
                 return 0;
 
@@ -93,12 +99,12 @@ int main()
     }
 }
 
-void push()
+void push()    //adds new element at the top of stack
 {
     struct Stack *node;
     char input[100];
 
-    node = (struct Stack *)malloc(sizeof(struct Stack));
+    node = (struct Stack *)malloc(sizeof(struct Stack));   //memory allocation
 
     if(node == NULL)
     {
@@ -124,9 +130,9 @@ void push()
         return;
     }
 
-    (*node).data = atoi(input);
+    node->data = atoi(input);
 
-    (*node).next = top;
+    node->next = top;
 
     top = node;
 
@@ -139,18 +145,18 @@ void pop()
 
     if(top == NULL)
     {
-        printf("Stack Underflow.\n");
+        printf("Stack Underflow.\n");     //stack is empty
         return;
     }
 
     temp = top;
 
-    printf("Deleted Element : %d\n", (*top).data);
+    printf("Deleted Element : %d\n", top->data);
 
-    top = (*top).next;
+    top = top->next;   //now the element deleted is no longer part of stack
 
-    free(temp);
-}
+    free(temp);     //releases the memory occupied by old node
+}   
 
 void peek()
 {
@@ -160,7 +166,74 @@ void peek()
         return;
     }
 
-    printf("Top Element : %d\n", (*top).data);
+    printf("Top Element : %d\n", top->data);
+}
+
+void update()
+{
+    struct Stack *temp;
+    char input[100];
+    int oldValue;
+    int newValue;
+
+    if(top == NULL)
+    {
+        printf("Stack is Empty. Nothing to update.\n");
+        return;
+    }
+
+    printf("Enter Value to Update : ");
+
+    if(!fgets(input, sizeof(input), stdin))
+    {
+        printf("Invalid Error.\n");
+        return;
+    }
+
+    input[strcspn(input, "\r\n")] = '\0';
+
+    if(!isNumber(input))
+    {
+        printf("Invalid Value! Please enter a valid number.\n");
+        return;
+    }
+
+    oldValue = atoi(input);
+
+    temp = top;
+
+    while(temp != NULL)
+    {
+        if(temp->data == oldValue)
+        {
+            printf("Enter New Value : ");
+
+            if(!fgets(input, sizeof(input), stdin))
+            {
+                printf("Invalid Error.\n");
+                return;
+            }
+
+            input[strcspn(input, "\r\n")] = '\0';
+
+            if(!isNumber(input))
+            {
+                printf("Invalid Value! Please enter a valid number.\n");
+                return;
+            }
+
+            newValue = atoi(input);
+
+            temp->data = newValue;
+
+            printf("Element Updated Successfully.\n");
+            return;
+        }
+
+        temp = temp->next;
+    }
+
+    printf("Element %d Not Found.\n", oldValue);
 }
 
 void display()
@@ -179,8 +252,8 @@ void display()
 
     while(temp != NULL)
     {
-        printf("%d\n", (*temp).data);
-        temp = (*temp).next;
+        printf("%d\n", temp->data);
+        temp = temp->next;
     }
 }
 
@@ -193,7 +266,7 @@ void freeStack()
 
     while(current != NULL)
     {
-        next = (*current).next;
+        next = current->next;
         free(current);
         current = next;
     }

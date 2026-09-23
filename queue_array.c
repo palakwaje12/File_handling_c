@@ -1,16 +1,17 @@
+//queue- FIFO
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
 
-#define SIZE 5
+#define SIZE 5   //preprocessor macro i.e.whenevr compiler sees size means 5
 
 int queue[SIZE];   //defines the max capacity of an array 
 int front = -1;        //queue is empty
 int rear = -1;
 
-int isNumber(const char *str)       //checks if the given string contains numbers
-{
+int isNumber(const char *str)       //checks if the given string contains only numbers
+{           //means str is a pointer to a char string const only becoz it only reads the string nd not modify it
     if(*str == '\0')       //checks if the string is empty
         return 0;
 
@@ -20,9 +21,9 @@ int isNumber(const char *str)       //checks if the given string contains number
             return 0;
         str++;        //move to the next character
     }
-    return 1;
+    return 1;    //if the entire string contains digits
 }
-
+//function declarations-tells the compiler that this exists in prog
 void enqueue();
 void dequeue();
 void display();
@@ -30,7 +31,7 @@ void display();
 int main()
 {
     char input[100];        //taken the input as character
-    unsigned int choice;
+    unsigned int choice;   //unsigned int to store positive integers
 
     while(1)
     {
@@ -42,22 +43,22 @@ int main()
 
         printf("Enter Choice : ");
 
-        if(!fgets(input, sizeof(input), stdin))   //fgets() is safer for input validation than scanf("%d")
+        if(!fgets(input, sizeof(input), stdin))   //to store the i/p,size,std i/p usually i/p from keyboard
         {
             printf("Invalid Error.\n");
             continue;
         }            //what fgets do is after pressing enter it stores \n at the end to prevent tht we use strcspn to replace \n by \0 
 
-        input[strcspn(input, "\n")] = '\0';
-
+        input[strcspn(input, "\n")] = '\0';  //checks at what idx first the \n comes then returns tht idx 
+                            //suppose we gets it at idx 3 input[3]=\0 replace it with \0
         if(!isNumber(input))
         {
             printf("Invalid input! Please enter a valid number.\n");
             continue;
         }
 
-        choice = (unsigned int)atoi(input);
-
+        choice = (unsigned int)atoi(input);    //(unsigned int) converts into unsigned integer
+        //atoi=> ASCII to int returns integer
         switch(choice)
         {
             case 1:
@@ -107,13 +108,13 @@ void enqueue()
         printf("Invalid Value! Please enter a number.\n");
         return;
     }
-    value = atoi(input);
+    value = atoi(input);  //suppose i/p="50" atoi converts into int nd value=50
     if(front == -1)
     {
         front = 0;
     }
-    rear++;
-    queue[rear] = value;
+    rear++;       //firstly rear=-1 thn incrementing rear=0
+    queue[rear] = value;       //queue[0]
 
     printf("Element Inserted Successfully.\n");
 }
@@ -122,7 +123,7 @@ void dequeue()
 {
     if(front == -1 || front > rear)
     {
-        printf("\nQueue Underflow.\n");
+        printf("\nQueue Underflow.\n");   //queue is empty
         return;
     }
 
@@ -152,3 +153,4 @@ void display()
     }
     printf("\n");
 }
+//never use gets becoz it don't know the size of the array

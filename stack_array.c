@@ -1,4 +1,5 @@
-#include<stdio.h>3
+//stack- LIFO
+#include<stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -7,9 +8,9 @@
 
 int stack[SIZE];
 int top = -1;      //initializing it with -1 which means stack is empty
-
+                //it stores the idx of topmost el
 int isNumber(const char *str)  //if entered str is only number/digit return 1 nd if some string return 0
-{
+{                               //user-defined funct
     if(*str == '\0')       //checks whether string is empty \0 means end of string
         return 0;
 
@@ -46,11 +47,10 @@ int main()
         printf("Enter Choice : ");
 
         if(!fgets(input, sizeof(input), stdin))     //used fgets to validate the input instead of scanf
-        {
-            printf("Invalid Error.\n");
+        {                                      //if it fails tht means i/p cannot be successfully read
+            printf("Invalid Error.\n");    //!fgets() means if it fails to read print invalid error
             continue;
         }
-
         input[strcspn(input, "\n")] = '\0';     //fgets normally stores \n when pressed enter so to avoid it we replace it with \0
 
         if(!isNumber(input))          //if input is not a number print invalid
@@ -87,7 +87,6 @@ int main()
         }
     }
 }
-
 void push()
 {
     char input[100];
@@ -98,7 +97,6 @@ void push()
         printf("Stack Overflow.\n");
         return;
     }
-
     printf("Enter Value : ");
 
     if(!fgets(input, sizeof(input), stdin))
@@ -106,9 +104,7 @@ void push()
         printf("Invalid Error.\n");
         return;
     }
-
     input[strcspn(input, "\n")] = '\0';
-
     if(!isNumber(input))     //checks whether entered value contains only digits
     {
         printf("Invalid Value! Please enter a valid number.\n");

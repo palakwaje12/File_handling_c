@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include<limits.h>
 
 struct Student
 {
@@ -10,22 +11,42 @@ struct Student
     char email[50];
 };
 //validate roll no
+#include <limits.h>
+
 int validateRollNumber(char input[])
 {
-    int rollNo;
+    int rollNo = 0;
+    int digit;
 
-    if (strlen(input) == 0)      //no input is given return 0
+    if (strlen(input) == 0)
         return 0;
+
+    // Check whether input contains only digits
     for (int i = 0; input[i] != '\0'; i++)
     {
         if (!isdigit((unsigned char)input[i]))
+        {
+            printf("Please enter number only.\n");
             return 0;
-    }    
-    rollNo = atoi(input);   //atoi converts string to integer i.e. ASCII to integer becoz fgets stores input as string nd rollno is int
-    if (rollNo == 0)
+        }
+
+        digit = input[i] - '0';   //this lets us know that input is digit only
+
+        // Check INT limit BEFORE storing the digit
+        if (rollNo > (INT_MAX - digit) / 10)
+        {
+            printf("Enter a number within the int limit (0 to %d).\n", INT_MAX);
+            return 0;
+        }
+
+        rollNo = rollNo * 10 + digit;
+    }
+
+    if (rollNo <= 0)
+    {
+        printf("Please enter positive number only.\n");
         return 0;
-    if (rollNo >= 100 && rollNo <= 999)
-        return 0;
+    }
 
     return 1;
 }
@@ -39,7 +60,7 @@ int validateName(char name[])
 
     for (int i = 0; name[i] != '\0'; i++)
     {
-        if (isalpha((unsigned char)name[i]))
+        if (isalpha(name[i]))
         {
             hasLetter = 1;
         }
@@ -102,23 +123,20 @@ int validateEmail(char email[])
 // GET ROLL NUMBER 
 int getRollNumber()
 {
-    char buffer[100];
+    char input[100];
 
     while (1)
     {
         printf("Enter Roll Number: ");
 
-        fgets(buffer, sizeof(buffer), stdin);
+        fgets(input, sizeof(input), stdin);
 
-        buffer[strcspn(buffer, "\n")] = '\0';
+        input[strcspn(input, "\n")] = '\0';
 
-        if (validateRollNumber(buffer))
+        if (validateRollNumber(input))
         {
-            return atoi(buffer);
+            return atoi(input);
         }
-
-        printf("Invalid roll number!\n");
-        printf("Please enter a positive number only.\n");
     }
 }
 //get name
@@ -161,8 +179,8 @@ void getEmail(char email[])
         printf("Example: student@gmail.com\n");
     }
 }
-//CHECK DUPLICATE ROLL NUMBER 
-int rollNumberExists(int roll)
+//CHECK  for DUPLICATE ROLL NUMBER 
+int rollNumberExists(long roll)
 {
     FILE *fp;
     struct Student s;
@@ -202,17 +220,13 @@ int main()
 
     do
     {
-        printf("\n========================================\n");
-        printf("        STUDENT FILE CRUD SYSTEM\n");
-        printf("========================================\n");
+        printf("----STUDENT FILE CRUD SYSTEM----\n");
 
         printf("1. Create / Add Student\n");
         printf("2. Read / Display Students\n");
         printf("3. Update Student\n");
         printf("4. Delete Student\n");
         printf("5. Exit\n");
-
-        printf("========================================\n");
 
         while (1)
         {
@@ -476,27 +490,16 @@ int main()
 
                     printf("\nStudent not found!\n");
                 }
-
                 break;
             }
 
-
-            // ================= EXIT =================
-
             case 5:
-
                 printf("\nExiting program...\n");
-
                 break;
 
-
             default:
-
                 printf("\nInvalid choice!\n");
         }
-
     } while (choice != 5);
-
-
     return 0;
 }
