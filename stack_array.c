@@ -30,63 +30,6 @@ void pop();
 void peek();
 void display();
 
-int main()
-{
-    char input[100];
-    int choice;
-
-    while(1)
-    {
-        printf("\n====== STACK MENU ======\n");
-        printf("1. Push\n");
-        printf("2. Pop\n");
-        printf("3. Peek\n");
-        printf("4. Display\n");
-        printf("5. Exit\n");
-
-        printf("Enter Choice : ");
-
-        if(!fgets(input, sizeof(input), stdin))     //used fgets to validate the input instead of scanf
-        {                                      //if it fails tht means i/p cannot be successfully read
-            printf("Invalid Error.\n");    //!fgets() means if it fails to read print invalid error
-            continue;
-        }
-        input[strcspn(input, "\n")] = '\0';     //fgets normally stores \n when pressed enter so to avoid it we replace it with \0
-
-        if(!isNumber(input))          //if input is not a number print invalid
-        {
-            printf("Invalid input! Please enter a valid number.\n");
-            continue;
-        }
-        choice = atoi(input);     //converts validated string into integer
-
-        switch(choice)
-        {
-            case 1:
-                push();
-                break;
-
-            case 2:
-                pop();
-                break;
-
-            case 3:
-                peek();
-                break;
-
-            case 4:
-                display();
-                break;
-
-            case 5:
-                printf("\nProgram Exited Successfully.\n");
-                return 0;
-
-            default:
-                printf("Invalid Choice! Please select 1-5.\n");
-        }
-    }
-}
 void push()
 {
     char input[100];
@@ -161,4 +104,62 @@ void display()
     }
 
     printf("\n");
+}
+
+int main()
+{
+    char input[100];
+    int choice;
+
+    while(1)
+    {
+        printf("\n====== STACK MENU ======\n");
+        printf("1. Push\n");
+        printf("2. Pop\n");
+        printf("3. Peek\n");
+        printf("4. Display\n");
+        printf("5. Exit\n");
+
+        printf("Enter Choice : ");
+
+        if(!fgets(input, sizeof(input), stdin))     //used fgets to validate the input instead of scanf
+        {                                      //if it fails tht means i/p cannot be successfully read
+            printf("Invalid Error.\n");    //!fgets() means if it fails to read print invalid error
+            continue;
+        }
+        input[strcspn(input, "\n")] = '\0';     //fgets normally stores \n when pressed enter so to avoid it we replace it with \0
+
+        if(!isNumber(input))          //if input is not a number print invalid
+        {
+            printf("Invalid input! Please enter a valid number.\n");
+            continue;
+        }
+        choice = atoi(input);     //converts validated string into integer
+
+        switch(choice)
+        {
+            case 1:
+                push();
+                break;
+
+            case 2:
+                pop();
+                break;
+
+            case 3:
+                peek();
+                break;
+
+            case 4:
+                display();
+                break;
+
+            case 5:
+                printf("\nProgram Exited Successfully.\n");
+                return 0;
+
+            default:
+                printf("Invalid Choice! Please select 1-5.\n");
+        }
+    }
 }
