@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 
 #define MAX 20
@@ -5,6 +6,7 @@
 int graph[MAX][MAX] = {0};
 int vertices = 0;
 
+/* Create a vertex */
 void createVertex()
 {
     if (vertices == MAX)
@@ -17,6 +19,7 @@ void createVertex()
     printf("Vertex %d added successfully.\n", vertices);
 }
 
+/* Create an edge */
 void createEdge()
 {
     int u, v;
@@ -54,7 +57,7 @@ void createEdge()
     printf("Edge added successfully.\n");
 }
 
-
+/* Read and display the graph */
 void readGraph()
 {
     int i, j;
@@ -66,7 +69,6 @@ void readGraph()
         return;
     }
 
-    /* Check whether any vertex is isolated */
     for (i = 0; i < vertices; i++)
     {
         int connected = 0;
@@ -117,9 +119,10 @@ void readGraph()
     }
 }
 
+/* Update an edge */
 void updateEdge()
 {
-    int u, v;
+    int u, v, choice;
 
     if (vertices < 2)
     {
@@ -144,12 +147,9 @@ void updateEdge()
 
     if (graph[u - 1][v - 1] == 1)
     {
-        // Edge exists, so only removal is possible 
         printf("Edge already exists between %d and %d.\n", u, v);
         printf("1. Remove Edge\n");
         printf("Choice: ");
-
-        int choice;
         scanf("%d", &choice);
 
         if (choice == 1)
@@ -165,12 +165,9 @@ void updateEdge()
     }
     else
     {
-        // No edge exists, so only addition is possible 
         printf("No edge exists between %d and %d.\n", u, v);
         printf("1. Add Edge\n");
         printf("Choice: ");
-
-        int choice;
         scanf("%d", &choice);
 
         if (choice == 1)
@@ -186,6 +183,7 @@ void updateEdge()
     }
 }
 
+/* Delete an edge */
 void deleteEdge()
 {
     int u, v;
@@ -223,6 +221,7 @@ void deleteEdge()
     printf("Edge deleted successfully.\n");
 }
 
+/* Delete a vertex */
 void deleteVertex()
 {
     int v, i, j;
@@ -270,6 +269,99 @@ void deleteVertex()
     printf("Vertex deleted successfully.\n");
 }
 
+/* BFS: Breadth-First Search */
+void BFS()
+{
+    int start;
+    int visited[MAX] = {0};
+    int queue[MAX];
+    int front = 0, rear = 0;
+    int current, i;
+
+    if (vertices == 0)
+    {
+        printf("Graph is empty.\n");
+        return;
+    }
+
+    printf("Enter starting vertex (1 to %d): ", vertices);
+    scanf("%d", &start);
+
+    if (start < 1 || start > vertices)
+    {
+        printf("Invalid vertex number!\n");
+        return;
+    }
+
+    queue[rear++] = start;
+    visited[start - 1] = 1;
+
+    printf("BFS Traversal: ");
+
+    while (front < rear)
+    {
+        current = queue[front++];
+        printf("%d ", current);
+
+        for (i = 0; i < vertices; i++)
+        {
+            if (graph[current - 1][i] == 1 &&
+                visited[i] == 0)
+            {
+                queue[rear++] = i + 1;
+                visited[i] = 1;
+            }
+        }
+    }
+
+    printf("\n");
+}
+
+/* DFS helper function */
+void DFS_Visit(int v, int visited[])
+{
+    int i;
+
+    visited[v - 1] = 1;
+    printf("%d ", v);
+
+    for (i = 0; i < vertices; i++)
+    {
+        if (graph[v - 1][i] == 1 &&
+            visited[i] == 0)
+        {
+            DFS_Visit(i + 1, visited);
+        }
+    }
+}
+
+/* DFS: Depth-First Search */
+void DFS()
+{
+    int start;
+    int visited[MAX] = {0};
+
+    if (vertices == 0)
+    {
+        printf("Graph is empty.\n");
+        return;
+    }
+
+    printf("Enter starting vertex (1 to %d): ", vertices);
+    scanf("%d", &start);
+
+    if (start < 1 || start > vertices)
+    {
+        printf("Invalid vertex number!\n");
+        return;
+    }
+
+    printf("DFS Traversal: ");
+    DFS_Visit(start, visited);
+    printf("\n");
+}
+
+/* Main function */
 int main()
 {
     int choice;
@@ -283,10 +375,16 @@ int main()
         printf("4. Update Edge\n");
         printf("5. Delete Edge\n");
         printf("6. Delete Vertex\n");
-        printf("7. Exit\n");
+        printf("7. BFS Traversal\n");
+        printf("8. DFS Traversal\n");
+        printf("9. Exit\n");
         printf("Enter your choice: ");
 
-        scanf("%d", &choice);
+        if (scanf("%d", &choice) != 1)
+        {
+            printf("Invalid input!\n");
+            return 1;
+        }
 
         switch (choice)
         {
@@ -315,6 +413,14 @@ int main()
                 break;
 
             case 7:
+                BFS();
+                break;
+
+            case 8:
+                DFS();
+                break;
+
+            case 9:
                 printf("Exiting program.\n");
                 break;
 
@@ -322,7 +428,7 @@ int main()
                 printf("Invalid choice!\n");
         }
 
-    } while (choice != 7);
+    } while (choice != 9);
 
     return 0;
 }
