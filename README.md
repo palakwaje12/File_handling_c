@@ -1,91 +1,127 @@
-# 📂 File Handling & Data Structures in C
+# 📚 File Handling & Data Structures in C
 
-A collection of C programs developed to practice **file handling, CRUD operations, and fundamental data structures** through hands-on implementation.
+A collection of C programs demonstrating the implementation of **File Handling, CRUD Operations, Linear Data Structures, Non-Linear Data Structures, and Advanced Data Structures**.
 
-This repository documents my learning journey in C programming, from file operations and basic data management to advanced tree structures, including **Binary Search Trees and Threaded Binary Search Trees**.
+This repository represents my practical learning journey in C programming, covering concepts from file-based record management to advanced structures such as **Threaded Binary Search Trees, AVL Trees, Heaps, Hashing, and Graphs**.
 
 ---
 
 ## 🚀 About the Repository
 
-The main objective of this repository is to strengthen my understanding of programming fundamentals, memory management, data organization, and algorithmic problem-solving through practical C programs.
+The purpose of this repository is to build a strong foundation in C programming and Data Structures through hands-on coding and implementation.
 
-### 📚 Topics Covered
+Each program focuses on understanding the logic, operations, memory management, and practical applications of different data structures.
 
-#### 📁 1. File Handling in C
-- File creation, reading, and writing
-- Appending data to files
+## 📖 Topics Covered
+
+### 1. 📁 File Handling in C
+- File creation and opening
+- Reading and writing files
+- Appending data
+- Updating file records
 - File-based data storage
-- Reading and updating stored records
 
-#### 🔄 2. CRUD Operations
-Implementation of the four basic data management operations:
+### 2. 🔄 CRUD Operations
+- Create – Inserting new records
+- Read – Displaying stored records
+- Update – Modifying existing records
+- Delete – Removing records
+- Record management using files
 
-- **Create** – Insert new records
-- **Read** – Display stored records
-- **Update** – Modify existing records
-- **Delete** – Remove records
+### 3. 🔗 Linked Lists
+- Singly Linked List
+- Node creation and traversal
+- Insertion and deletion
+- Searching and updating nodes
+- Dynamic memory allocation
 
-#### 🔗 3. Linked Lists
-- Dynamic memory allocation using pointers
-- Node creation and linking
-- Insertion and deletion operations
-- Traversal and display of nodes
-
-#### 📚 4. Stack
-- Stack implementation using arrays and linked lists
+### 4. 📚 Stacks
+- Stack implementation using arrays
+- Stack implementation using linked lists
 - Push and Pop operations
-- Stack traversal and display
-- LIFO (Last In, First Out) principle
+- Peek operation
+- LIFO (Last In, First Out)
 
-#### 🚶 5. Queue
-- Queue implementation using arrays and linked lists
+### 5. 🚶 Queues
+- Queue implementation using arrays
+- Queue implementation using linked lists
 - Enqueue and Dequeue operations
-- Queue traversal and display
-- FIFO (First In, First Out) principle
+- Circular Queue concepts
+- FIFO (First In, First Out)
 
-#### 🌳 6. Binary Tree
-- Binary tree creation and traversal
+### 6. 🌳 Binary Trees
+- Binary tree creation
 - Level-order insertion
-- Inorder, preorder, and other traversal techniques
-- Node searching, updating, and deletion
-- Queue and stack-based traversal techniques
+- Inorder traversal
+- Preorder traversal
+- Postorder traversal
+- Searching, updating, and deleting nodes
 
-#### 🌲 7. Binary Search Tree (BST)
+### 7. 🌲 Binary Search Trees (BST)
 - BST creation and insertion
-- Searching for a node
+- Searching for elements
 - Inorder and preorder traversal
-- Node updating and deletion
-- Handling different deletion cases
+- Node deletion
+- Handling different BST deletion cases
 
-#### 🧵 8. Threaded Binary Search Tree (TBST)
-- Understanding threaded binary tree concepts
-- Insertion in a threaded BST
+### 8. 🧵 Threaded Binary Search Trees (TBST)
+- Threaded binary tree representation
+- Left and right thread pointers
+- Threaded BST insertion
 - Inorder traversal using threads
 - Preorder traversal
 - Searching for nodes
-- Using left and right thread flags to distinguish child pointers from threads
+
+### 9. ⚖️ AVL Trees
+- Self-balancing Binary Search Trees
+- Balance factor calculation
+- LL (Left-Left) rotation
+- RR (Right-Right) rotation
+- LR (Left-Right) rotation
+- RL (Right-Left) rotation
+- Maintaining tree balance after insertion
+
+### 10. 🏔️ Heaps
+- Min Heap
+- Max Heap
+- Heap insertion
+- Heap deletion
+- Heapify operations
+- Maintaining the heap property
+
+### 11. #️⃣ Hashing
+- Hash table implementation
+- Hash function concepts
+- Key insertion and searching
+- Collision handling
+- Hash table operations
+
+### 12. 🕸️ Graphs
+- Graph representation
+- Adjacency Matrix
+- Adjacency List
+- Graph traversal concepts
+- Breadth-First Search (BFS)
+- Depth-First Search (DFS)
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Technologies & Tools
 
 <p align="center">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" width="60" height="60" alt="C"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" width="55" height="55" alt="C"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" width="45" height="45" alt="VS Code"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="45" height="45" alt="Git"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="45" height="45" alt="GitHub"/>
 </p>
 
 <p align="center">
-  <b>C Programming Language</b>
+  <b>C Programming · GCC · Visual Studio Code · Git · GitHub</b>
 </p>
-
-**Tools used:**
-- Visual Studio Code
-- GCC Compiler
-- Git and GitHub
 
 ---
 
-## 💻 How to Run the Programs
+## 💻 Getting Started
 
 ### 1. Clone the repository
 
@@ -93,7 +129,7 @@ Implementation of the four basic data management operations:
 git clone https://github.com/palakwaje12/File_handling_c.git
 ```
 
-### 2. Navigate to the project directory
+### 2. Navigate to the project folder
 
 ```bash
 cd File_handling_c
@@ -101,13 +137,13 @@ cd File_handling_c
 
 ### 3. Compile a C program
 
-Replace `filename.c` with the name of the program you want to execute.
+Replace `filename.c` with the C file you want to execute.
 
 ```bash
 gcc filename.c -o program
 ```
 
-### 4. Execute the program
+### 4. Run the program
 
 On Windows PowerShell:
 
@@ -115,31 +151,58 @@ On Windows PowerShell:
 .\program.exe
 ```
 
-**Note:** Some programs may require input through the terminal. If a program uses file handling, ensure that the required data files are available in the expected directory.
+**Note:** Each C program can be compiled and executed separately. Some programs may require user input or supporting data files.
 
 ---
 
 ## 🎯 Key Learning Outcomes
 
-Through these programs, I am strengthening my understanding of:
+Through these implementations, I am developing practical knowledge of:
 
-- C programming fundamentals and modular programming
+- C programming fundamentals
 - Pointers and dynamic memory allocation
-- File handling and persistent data storage
-- Structures and user-defined data types
+- Structures and modular programming
+- File handling and data persistence
 - CRUD operations and record management
 - Linear and non-linear data structures
-- Binary tree traversal techniques
-- BST operations and threaded tree concepts
-- Logical thinking, debugging, and problem-solving
+- Tree traversal and manipulation
+- Self-balancing tree operations
+- Heap properties and operations
+- Hash tables and collision handling
+- Graph representation and traversal
+- Debugging and logical problem-solving
 
 ---
 
-## 📈 Learning Journey
+## 📈 My Learning Journey
 
-**File Handling → CRUD Operations → Linked Lists → Stacks & Queues → Binary Trees → Binary Search Trees → Threaded Binary Search Trees**
+```text
+C Programming Fundamentals
+          ↓
+     File Handling
+          ↓
+    CRUD Operations
+          ↓
+     Linked Lists
+          ↓
+    Stacks & Queues
+          ↓
+      Binary Trees
+          ↓
+  Binary Search Trees
+          ↓
+ Threaded Binary Search Trees
+          ↓
+       AVL Trees
+          ↓
+         Heaps
+          ↓
+        Hashing
+          ↓
+         Graphs
+```
 
-Each program represents a step toward developing stronger programming fundamentals and a deeper understanding of data structures.
+This repository will continue to evolve as I learn, practice, and implement more advanced concepts in C.
 
 ---
 
@@ -149,12 +212,16 @@ Each program represents a step toward developing stronger programming fundamenta
 
 Computer Engineering Student | Aspiring Software Engineer
 
-Interested in Data Structures & Algorithms, Software Development, Backend Development, and Artificial Intelligence.
+Interested in:
+- Software Development
+- Data Structures & Algorithms
+- Backend Development
+- Artificial Intelligence
 
-- GitHub: [@palakwaje12](https://github.com/palakwaje12)
+🔗 **GitHub:** [@palakwaje12](https://github.com/palakwaje12)
 
 ---
 
-⭐ If you find this repository useful, feel free to explore the programs and follow along with my learning journey!
+⭐ If you find this repository useful, feel free to explore the programs!
 
-**Learning by coding. Improving through practice. Building one program at a time. 🚀**
+**Learning by coding. Improving through practice. Building step by step. 🚀**
